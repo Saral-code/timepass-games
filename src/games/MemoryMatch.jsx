@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { submitScore } from '../utils/firebase';
 
-const EMOJIS = ['🍎', '🍌', '🍒', '🍉', '🍇', '🍓', '🥑', '🥝'];
-
-function MemoryMatch({ username, dayIndex, onComplete }) {
+function MemoryMatch({ username, dayIndex, onComplete, config }) {
   const [cards, setCards] = useState([]);
   const [flipped, setFlipped] = useState([]);
   const [solved, setSolved] = useState([]);
@@ -12,12 +10,13 @@ function MemoryMatch({ username, dayIndex, onComplete }) {
   const [isFinished, setIsFinished] = useState(false);
 
   useEffect(() => {
-    // Initialize game
+    // Initialize game with dynamic theme
+    const EMOJIS = config?.emojis || ['🍎', '🍌', '🍒', '🍉', '🍇', '🍓', '🥑', '🥝'];
     const shuffled = [...EMOJIS, ...EMOJIS]
       .sort(() => Math.random() - 0.5)
       .map((emoji, index) => ({ id: index, emoji }));
     setCards(shuffled);
-  }, [dayIndex]);
+  }, [dayIndex, config]);
 
   useEffect(() => {
     let timer;

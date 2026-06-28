@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import MemoryMatch from '../games/MemoryMatch';
+import MathQuiz from '../games/MathQuiz';
 import { getDayIndex, getGameForDay } from '../utils/time';
 
 function GamePage({ username }) {
@@ -11,6 +12,15 @@ function GamePage({ username }) {
 
   const handleGameComplete = (timeMs) => {
     setResult(timeMs);
+  };
+
+  const renderGame = () => {
+    if (gameConfig.type === 'memory') {
+      return <MemoryMatch username={username} dayIndex={dayIndex} onComplete={handleGameComplete} config={gameConfig.config} />;
+    } else if (gameConfig.type === 'math') {
+      return <MathQuiz username={username} dayIndex={dayIndex} onComplete={handleGameComplete} config={gameConfig.config} />;
+    }
+    return <div>Game type not found</div>;
   };
 
   return (
@@ -63,7 +73,7 @@ function GamePage({ username }) {
           </div>
         ) : (
           <div style={{ width: '100%', padding: '24px' }}>
-            <MemoryMatch username={username} dayIndex={dayIndex} onComplete={handleGameComplete} />
+            {renderGame()}
           </div>
         )}
       </div>

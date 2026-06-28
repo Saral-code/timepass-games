@@ -17,13 +17,39 @@ export const getDayIndex = () => {
   return diffDays % 365;
 };
 
+const THEMES = [
+  { name: "Fruit Match", emojis: ['🍎', '🍌', '🍒', '🍉', '🍇', '🍓', '🥑', '🥝'] },
+  { name: "Animal Match", emojis: ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼'] },
+  { name: "Sports Match", emojis: ['⚽', '🏀', '🏈', '⚾', '🎾', '🏐', '🏉', '🎱'] },
+  { name: "Space Match", emojis: ['🌍', '🌕', '☀️', '⭐', '☄️', '🚀', '🛸', '🛰️'] },
+  { name: "Spooky Match", emojis: ['🎃', '👻', '🧛', '🧟', '🦇', '🕷️', '🕸️', '💀'] }
+];
+
 export const getGameForDay = (dayIndex) => {
-  // We'll import schedule dynamically or return from a constant
-  // For now, return a placeholder structure
-  return {
-    day: dayIndex,
-    title: "Memory Match",
-    type: "memory",
-    description: "Find all the matching pairs in the shortest time."
-  };
+  // We alternate between Memory Match and Math Quiz every day
+  const isMemory = dayIndex % 2 === 0;
+  
+  if (isMemory) {
+    // Pick a theme based on the day to keep it fresh
+    const themeIndex = Math.floor(dayIndex / 2) % THEMES.length;
+    const theme = THEMES[themeIndex];
+    return {
+      day: dayIndex,
+      title: `Memory Match: ${theme.name}`,
+      type: "memory",
+      description: "Find all the matching pairs in the shortest time.",
+      config: { emojis: theme.emojis }
+    };
+  } else {
+    // Math difficulty scales slightly over the year, then loops
+    const baseDifficulty = 10;
+    const difficultyIncrease = Math.floor(dayIndex / 60) * 5; // Gets harder every 60 days
+    return {
+      day: dayIndex,
+      title: "Speed Math",
+      type: "math",
+      description: "Solve 10 math problems as fast as possible. Wrong answers add a 2s penalty!",
+      config: { difficulty: baseDifficulty + difficultyIncrease }
+    };
+  }
 };
