@@ -13,8 +13,8 @@ export const getDayIndex = () => {
   const diffTime = nowUTC - launchUTC;
   const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
   
-  // Modulo 90 so it loops back to day 0 after 90 days
-  return diffDays % 90;
+  // Modulo 365 so it loops back to day 0 after 365 days
+  return diffDays % 365;
 };
 
 export const getGameForDay = (dayIndex) => {

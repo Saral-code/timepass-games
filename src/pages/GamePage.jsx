@@ -17,7 +17,7 @@ function GamePage({ username }) {
     <div className="container animate-fade-in">
       <div className="page-header" style={{ marginBottom: '24px' }}>
         <div style={{ display: 'inline-block', background: 'rgba(255,255,255,0.1)', padding: '4px 12px', borderRadius: '99px', fontSize: '0.875rem', marginBottom: '16px', color: 'var(--text-muted)' }}>
-          Day {dayIndex + 1} of 90
+          Day {dayIndex + 1} of 365
         </div>
         <h1 className="page-title text-gradient">{gameConfig.title}</h1>
         <p className="page-subtitle">{gameConfig.description}</p>
@@ -37,7 +37,7 @@ function GamePage({ username }) {
           <>
             <h2 style={{ marginBottom: '24px' }}>Ready to Play?</h2>
             <p style={{ color: 'var(--text-muted)', marginBottom: '32px', textAlign: 'center', maxWidth: '400px' }}>
-              You only get one chance to set your score for today's leaderboard. Make it count, <strong style={{color: 'white'}}>{username}</strong>!
+              You can try as many times as you want! The game refreshes every time you reload the page, but only your best score matters, <strong style={{color: 'white'}}>{username}</strong>.
             </p>
             <button 
               className="btn-primary" 
